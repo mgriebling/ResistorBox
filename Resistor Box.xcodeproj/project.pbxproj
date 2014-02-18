@@ -330,7 +330,9 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resistor Box/Resistor Box-Prefix.pch";
+				GCC_UNROLL_LOOPS = YES;
 				INFOPLIST_FILE = "Resistor Box/Resistor Box-Info.plist";
+				LLVM_VECTORIZE_LOOPS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -341,7 +343,9 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resistor Box/Resistor Box-Prefix.pch";
+				GCC_UNROLL_LOOPS = YES;
 				INFOPLIST_FILE = "Resistor Box/Resistor Box-Info.plist";
+				LLVM_VECTORIZE_LOOPS = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
