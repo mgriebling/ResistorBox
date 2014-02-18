@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F7D7C27183E388700BAF538 /* Resistors.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 2F7D7C26183E388700BAF538 /* Resistors.jpeg */; };
+		2F7D7C2C183E3F6000BAF538 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7D7C29183E3F6000BAF538 /* AbstractActionSheetPicker.m */; };
+		2F7D7C2D183E3F6000BAF538 /* ActionSheetNumberPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7D7C2B183E3F6000BAF538 /* ActionSheetNumberPicker.m */; };
+		2F7D7C30183E417600BAF538 /* NumberPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7D7C2F183E417600BAF538 /* NumberPicker.m */; };
 		2FAC006C1732976100A449A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAC006B1732976100A449A6 /* UIKit.framework */; };
 		2FAC006E1732976100A449A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAC006D1732976100A449A6 /* Foundation.framework */; };
 		2FAC00701732976100A449A6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FAC006F1732976100A449A6 /* CoreGraphics.framework */; };
@@ -22,9 +26,19 @@
 		2FAC008D1732976100A449A6 /* Resistor_Box.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FAC008B1732976100A449A6 /* Resistor_Box.xcdatamodeld */; };
 		2FAC00901732976100A449A6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAC008F1732976100A449A6 /* MainViewController.m */; };
 		2FAC00931732976100A449A6 /* FlipsideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAC00921732976100A449A6 /* FlipsideViewController.m */; };
+		2FAC009D1732AE8000A449A6 /* Resistors.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAC009C1732AE8000A449A6 /* Resistors.m */; };
+		2FAC00AF1733E4EB00A449A6 /* Component.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAC00AE1733E4EB00A449A6 /* Component.m */; };
+		2FAC00B21733E4EB00A449A6 /* Types.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FAC00B11733E4EB00A449A6 /* Types.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F7D7C26183E388700BAF538 /* Resistors.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Resistors.jpeg; sourceTree = "<group>"; };
+		2F7D7C28183E3F6000BAF538 /* AbstractActionSheetPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractActionSheetPicker.h; sourceTree = "<group>"; };
+		2F7D7C29183E3F6000BAF538 /* AbstractActionSheetPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractActionSheetPicker.m; sourceTree = "<group>"; };
+		2F7D7C2A183E3F6000BAF538 /* ActionSheetNumberPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActionSheetNumberPicker.h; sourceTree = "<group>"; };
+		2F7D7C2B183E3F6000BAF538 /* ActionSheetNumberPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActionSheetNumberPicker.m; sourceTree = "<group>"; };
+		2F7D7C2E183E417600BAF538 /* NumberPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NumberPicker.h; sourceTree = "<group>"; };
+		2F7D7C2F183E417600BAF538 /* NumberPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NumberPicker.m; sourceTree = "<group>"; };
 		2FAC00681732976100A449A6 /* Resistor Box.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Resistor Box.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FAC006B1732976100A449A6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2FAC006D1732976100A449A6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -46,6 +60,12 @@
 		2FAC008F1732976100A449A6 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		2FAC00911732976100A449A6 /* FlipsideViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlipsideViewController.h; sourceTree = "<group>"; };
 		2FAC00921732976100A449A6 /* FlipsideViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlipsideViewController.m; sourceTree = "<group>"; };
+		2FAC009B1732AE8000A449A6 /* Resistors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resistors.h; sourceTree = "<group>"; };
+		2FAC009C1732AE8000A449A6 /* Resistors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Resistors.m; sourceTree = "<group>"; };
+		2FAC00AD1733E4EB00A449A6 /* Component.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Component.h; sourceTree = "<group>"; };
+		2FAC00AE1733E4EB00A449A6 /* Component.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Component.m; sourceTree = "<group>"; };
+		2FAC00B01733E4EB00A449A6 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
+		2FAC00B11733E4EB00A449A6 /* Types.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Types.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,11 +118,23 @@
 				2FAC007D1732976100A449A6 /* AppDelegate.m */,
 				2FAC00851732976100A449A6 /* MainStoryboard_iPhone.storyboard */,
 				2FAC00881732976100A449A6 /* MainStoryboard_iPad.storyboard */,
+				2F7D7C28183E3F6000BAF538 /* AbstractActionSheetPicker.h */,
+				2F7D7C29183E3F6000BAF538 /* AbstractActionSheetPicker.m */,
+				2F7D7C2A183E3F6000BAF538 /* ActionSheetNumberPicker.h */,
+				2F7D7C2B183E3F6000BAF538 /* ActionSheetNumberPicker.m */,
+				2F7D7C2E183E417600BAF538 /* NumberPicker.h */,
+				2F7D7C2F183E417600BAF538 /* NumberPicker.m */,
+				2FAC009B1732AE8000A449A6 /* Resistors.h */,
+				2FAC009C1732AE8000A449A6 /* Resistors.m */,
 				2FAC008E1732976100A449A6 /* MainViewController.h */,
 				2FAC008F1732976100A449A6 /* MainViewController.m */,
 				2FAC00911732976100A449A6 /* FlipsideViewController.h */,
 				2FAC00921732976100A449A6 /* FlipsideViewController.m */,
 				2FAC008B1732976100A449A6 /* Resistor_Box.xcdatamodeld */,
+				2FAC00AD1733E4EB00A449A6 /* Component.h */,
+				2FAC00AE1733E4EB00A449A6 /* Component.m */,
+				2FAC00B01733E4EB00A449A6 /* Types.h */,
+				2FAC00B11733E4EB00A449A6 /* Types.m */,
 				2FAC00741732976100A449A6 /* Supporting Files */,
 			);
 			path = "Resistor Box";
@@ -111,6 +143,7 @@
 		2FAC00741732976100A449A6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2F7D7C26183E388700BAF538 /* Resistors.jpeg */,
 				2FAC00751732976100A449A6 /* Resistor Box-Info.plist */,
 				2FAC00761732976100A449A6 /* InfoPlist.strings */,
 				2FAC00791732976100A449A6 /* main.m */,
@@ -173,6 +206,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F7D7C27183E388700BAF538 /* Resistors.jpeg in Resources */,
 				2FAC00781732976100A449A6 /* InfoPlist.strings in Resources */,
 				2FAC00801732976100A449A6 /* Default.png in Resources */,
 				2FAC00821732976100A449A6 /* Default@2x.png in Resources */,
@@ -189,11 +223,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F7D7C2C183E3F6000BAF538 /* AbstractActionSheetPicker.m in Sources */,
+				2F7D7C30183E417600BAF538 /* NumberPicker.m in Sources */,
 				2FAC007A1732976100A449A6 /* main.m in Sources */,
 				2FAC007E1732976100A449A6 /* AppDelegate.m in Sources */,
 				2FAC008D1732976100A449A6 /* Resistor_Box.xcdatamodeld in Sources */,
+				2F7D7C2D183E3F6000BAF538 /* ActionSheetNumberPicker.m in Sources */,
 				2FAC00901732976100A449A6 /* MainViewController.m in Sources */,
 				2FAC00931732976100A449A6 /* FlipsideViewController.m in Sources */,
+				2FAC009D1732AE8000A449A6 /* Resistors.m in Sources */,
+				2FAC00AF1733E4EB00A449A6 /* Component.m in Sources */,
+				2FAC00B21733E4EB00A449A6 /* Types.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +366,7 @@
 				2FAC00981732976100A449A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

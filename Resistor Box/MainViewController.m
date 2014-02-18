@@ -7,9 +7,20 @@
 //
 
 #import "MainViewController.h"
+#import "NumberPicker.h"
 
 @interface MainViewController ()
-
+@property (weak, nonatomic) IBOutlet UILabel *R1Label;
+@property (weak, nonatomic) IBOutlet UILabel *R2Label;
+@property (weak, nonatomic) IBOutlet UILabel *R3Label;
+@property (weak, nonatomic) IBOutlet UILabel *R4Label;
+@property (weak, nonatomic) IBOutlet UILabel *R5Label;
+@property (weak, nonatomic) IBOutlet UILabel *R6Label;
+@property (weak, nonatomic) IBOutlet UILabel *R7Label;
+@property (weak, nonatomic) IBOutlet UILabel *R8Label;
+@property (weak, nonatomic) IBOutlet UILabel *R9Label;
+@property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+@property (strong, nonatomic) NumberPicker *picker;
 @end
 
 @implementation MainViewController
@@ -17,7 +28,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
+    // set up the number picker
+    NSDecimalNumber *maximum = [[NSDecimalNumber alloc] initWithDouble:1000.0];
+    NSDecimalNumber *minimum = [[NSDecimalNumber alloc] initWithDouble:0.0];
+    NSDecimalNumber *step    = [[NSDecimalNumber alloc] initWithDouble:1.0];
+    NSArray *units = @[@"Ω", @"KΩ", @"MΩ"];
+    self.picker = [[NumberPicker alloc] initWithRangeOfNumbers:minimum maximum:maximum stepSize:step labels:units];
+    
 }
 
 - (void)didReceiveMemoryWarning
