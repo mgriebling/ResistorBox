@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "NumberPicker.h"
+#import "Resistors.h"
 
 @interface MainViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *R1Label;
@@ -30,12 +31,27 @@
     [super viewDidLoad];
 	
     // set up the number picker
-    NSDecimalNumber *maximum = [[NSDecimalNumber alloc] initWithDouble:1000.0];
+    NSDecimalNumber *maximum = [[NSDecimalNumber alloc] initWithDouble:999.9];
     NSDecimalNumber *minimum = [[NSDecimalNumber alloc] initWithDouble:0.0];
-    NSDecimalNumber *step    = [[NSDecimalNumber alloc] initWithDouble:1.0];
-    NSArray *units = @[@"Ω", @"KΩ", @"MΩ"];
-    self.picker = [[NumberPicker alloc] initWithRangeOfNumbers:minimum maximum:maximum stepSize:step labels:units];
+    NSArray *units = @[@"mΩ", @"Ω", @"KΩ", @"MΩ"];
+    self.picker = [[NumberPicker alloc] initWithMaximum:maximum andMinimum:minimum andLabels:units];
+    self.pickerView.delegate = self.picker;
+    self.pickerView.dataSource = self.picker;
+    __weak MainViewController *wself = self;
+    self.picker.valueChangeCallback = ^ (NumberPicker *picker) {
+        // allow dynamic updates of values as user plays with picker
+        NSLog(@"User picked value = %@%@", picker.value, [picker getSelectedLabel:wself.pickerView]);
+        [wself computeMatchingCombinationsForResistor:[NSString stringWithFormat:@"%@%@", picker.value, [picker getSelectedLabel:wself.pickerView]]];
+    };
+}
+
+- (void)computeMatchingCombinationsForResistor:(NSString *)resistor {
+    double value = [Resistors parseString:resistor];
     
+   NSArray *series = [Resistors computeSeries:value];
+   NSArray *parallel = [Resistors ComputeParallel:value];
+   NSArray *both = [Resistors ComputeSeriesParallel:value];
+
 }
 
 - (void)didReceiveMemoryWarning

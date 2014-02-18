@@ -41,7 +41,7 @@
     self = [self initWithTarget:target successAction:successAction cancelAction:cancelActionOrNil origin:origin];
     if (self) {
         self.value = number;
-        self.model = [[NumberPicker alloc] initWithLabels:maximum labels:units];
+        self.model = [[NumberPicker alloc] initWithMaximum:maximum andLabels:units];
         self.unit = currentUnit;
         self.title = title;
     }

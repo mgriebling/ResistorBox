@@ -26,7 +26,7 @@
 @property (strong, nonatomic, readwrite) NSArray *labels;
 @property (nonatomic, readwrite) NSInteger decimalColumn;
 @property (strong, nonatomic, readwrite) NSDecimalNumber *value;
-@property (strong, nonatomic, readwrite) LLRate *rate;
+//@property (strong, nonatomic, readwrite) LLRate *rate;
 @property (nonatomic) NSInteger maxActiveRow;
 @property (nonatomic) NSUInteger kindOfPicker;
 @property (nonatomic, strong) NSNumberFormatter *formatter;
@@ -437,14 +437,14 @@
  * \date   	17 April 2013
  */
 //********************************************************************************
-- (id)initWithRate:(LLRate *)rate {
-    self = [self init];
-    if (self) {
-        _rate = rate;
-        _kindOfPicker = RatePicker;
-    }
-    return self;
-}
+//- (id)initWithRate:(LLRate *)rate {
+//    self = [self init];
+//    if (self) {
+//        _rate = rate;
+//        _kindOfPicker = RatePicker;
+//    }
+//    return self;
+//}
 
 //********************************************************************************
 /**
@@ -477,9 +477,9 @@
         NSDecimalNumber *index = [[self.maxValue decimalNumberBySubtracting:number] decimalNumberByDividingBy:self.stepSize];
         [picker selectRow:index.integerValue inComponent:0 animated:YES];
     } else if (self.kindOfPicker == RatePicker) {
-        self.rate = val;
-        [picker selectRow:[self.rate timeIndex] inComponent:0 animated:YES];  // set time
-        [picker selectRow:[self.rate unitIndex] inComponent:1 animated:YES];  // set units
+//        self.rate = val;
+//        [picker selectRow:[self.rate timeIndex] inComponent:0 animated:YES];  // set time
+//        [picker selectRow:[self.rate unitIndex] inComponent:1 animated:YES];  // set units
     } else {
         BOOL isNegative = ((NSDecimalNumber *)val).doubleValue < 0.0;
         self.value = val;
@@ -555,11 +555,11 @@
 //********************************************************************************
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (self.kindOfPicker == RatePicker) {
-        if (component == 0) {
-            return self.rate.maxIndexForTime;
-        } else {
-            return self.rate.maxIndexForUnits;
-        }
+//        if (component == 0) {
+//            return self.rate.maxIndexForTime;
+//        } else {
+//            return self.rate.maxIndexForUnits;
+//        }
     }
     if ([self negativeColumnValues]) {
         if (component == 0) return 2;
@@ -585,11 +585,11 @@
         NSArray *column = self.columnValues[component];
         string = column[row];
     } else if (self.kindOfPicker == RatePicker) {
-        if (component == 0) {
-            return [self.rate stringForTimeIndex:row];
-        } else {
-            return [self.rate stringForUnitIndex:row];
-        }
+//        if (component == 0) {
+//            return [self.rate stringForTimeIndex:row];
+//        } else {
+//            return [self.rate stringForUnitIndex:row];
+//        }
     } else {
         if ([self negativeColumnValues]) {
             if (component == 0) {
@@ -694,19 +694,19 @@
         NSNumber *number = [self.formatter numberFromString:column[row]];
         self.value = [NSDecimalNumber decimalNumberWithDecimal:[number decimalValue]];
     } else if (self.kindOfPicker == RatePicker) {
-        if (component == 1) {
-            // update the units
-            [self.rate setUnitFromUnitIndex:row];
-        } else {
-            // update the time
-            [self.rate setTimeFromTimeIndex:row];
-        }
-        if (self.valueChangeCallback) {
-            self.valueChangeCallback(self);
-        }
-        [pickerView reloadAllComponents];
-        [pickerView selectRow:[self.rate timeIndex] inComponent:0 animated:YES];  // set time
-        [pickerView selectRow:[self.rate unitIndex] inComponent:1 animated:YES];  // set units
+//        if (component == 1) {
+//            // update the units
+//            [self.rate setUnitFromUnitIndex:row];
+//        } else {
+//            // update the time
+//            [self.rate setTimeFromTimeIndex:row];
+//        }
+//        if (self.valueChangeCallback) {
+//            self.valueChangeCallback(self);
+//        }
+//        [pickerView reloadAllComponents];
+//        [pickerView selectRow:[self.rate timeIndex] inComponent:0 animated:YES];  // set time
+//        [pickerView selectRow:[self.rate unitIndex] inComponent:1 animated:YES];  // set units
     } else {
         NSString *stringValue = [self getPickerNumberAsString:pickerView];
         self.value = [NSDecimalNumber decimalNumberWithString:stringValue];
