@@ -22,6 +22,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *R9Label;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (strong, nonatomic) NumberPicker *picker;
+@property (weak, nonatomic) IBOutlet UILabel *seriesResult;
+@property (weak, nonatomic) IBOutlet UILabel *parallelResult;
+@property (weak, nonatomic) IBOutlet UILabel *combinedResult;
 @end
 
 @implementation MainViewController
@@ -48,10 +51,38 @@
 - (void)computeMatchingCombinationsForResistor:(NSString *)resistor {
     double value = [Resistors parseString:resistor];
     
-   NSArray *series = [Resistors computeSeries:value];
-   NSArray *parallel = [Resistors ComputeParallel:value];
-   NSArray *both = [Resistors ComputeSeriesParallel:value];
-
+    NSArray *series = [Resistors computeSeries:value];
+    NSNumber *result = series[3];
+    self.seriesResult.text = [NSString stringWithFormat:@"Series: %@", [Resistors stringFromR:result.doubleValue]];
+    result = series[0];
+    self.R1Label.text = [NSString stringWithFormat:@"R₁ = %@", [Resistors stringFromR:result.doubleValue]];
+    result = series[1];
+    self.R2Label.text = [NSString stringWithFormat:@"R₂ = %@", [Resistors stringFromR:result.doubleValue]];
+    result = series[2];
+    self.R3Label.text = [NSString stringWithFormat:@"R₃ = %@", [Resistors stringFromR:result.doubleValue]];
+    NSLog(@"Series values = %@", series);
+    
+    NSArray *parallel = [Resistors ComputeParallel:value];
+    result = parallel[3];
+    self.parallelResult.text = [NSString stringWithFormat:@"Parallel: %@", [Resistors stringFromR:result.doubleValue]];
+    result = parallel[0];
+    self.R4Label.text = [NSString stringWithFormat:@"R₄ = %@", [Resistors stringFromR:result.doubleValue]];
+    result = parallel[1];
+    self.R5Label.text = [NSString stringWithFormat:@"R₅ = %@", [Resistors stringFromR:result.doubleValue]];
+    result = parallel[2];
+    self.R6Label.text = [NSString stringWithFormat:@"R₆ = %@", [Resistors stringFromR:result.doubleValue]];
+    NSLog(@"Parallel values = %@", parallel);
+    
+    NSArray *both = [Resistors ComputeSeriesParallel:value];
+    result = both[3];
+    self.combinedResult.text = [NSString stringWithFormat:@"Combined: %@", [Resistors stringFromR:result.doubleValue]];
+    result = both[0];
+    self.R7Label.text = [NSString stringWithFormat:@"R₇ = %@", [Resistors stringFromR:result.doubleValue]];
+    result = both[1];
+    self.R8Label.text = [NSString stringWithFormat:@"R₈ = %@", [Resistors stringFromR:result.doubleValue]];
+    result = both[2];
+    self.R9Label.text = [NSString stringWithFormat:@"R₉ = %@", [Resistors stringFromR:result.doubleValue]];
+    NSLog(@"Combined values = %@", both);
 }
 
 - (void)didReceiveMemoryWarning
