@@ -157,13 +157,15 @@ typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation bl
                 Rt = fabs(X - alg(i, j, k));
                 if (Rt < Re) {
                     Ri = i; Rj = j; Rk = k; Re = Rt;
+                } else if (fabs(Rt - Re) < 0.000001) {
+                    NSLog(@"Duplicate combination: %@, %@, and %@", [Resistors stringFromR:[Resistors value:i]], [Resistors stringFromR:[Resistors value:j]], [Resistors stringFromR:[Resistors value:k]]);
                 }
             }
         }
     }
     
     Rt = alg(Ri, Rj, Rk);
-    return @[@([Resistors value:Ri]), @([Resistors value:Rj]), @([Resistors value:Rk]), @(Rt), @(100 * abs(X - Rt) / X)];
+    return @[@([Resistors value:Ri]), @([Resistors value:Rj]), @([Resistors value:Rk]), @(Rt), @(100.0 * fabs(X - Rt) / X)];
 }
 
 + (NSArray *) computeSeries:(double) X {
