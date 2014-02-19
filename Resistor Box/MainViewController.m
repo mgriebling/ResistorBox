@@ -43,49 +43,68 @@
     __weak MainViewController *wself = self;
     self.picker.valueChangeCallback = ^ (NumberPicker *picker) {
         // allow dynamic updates of values as user plays with picker
-        NSLog(@"User picked value = %@%@", picker.value, [picker getSelectedLabel:wself.pickerView]);
+//        NSLog(@"User picked value = %@%@", picker.value, [picker getSelectedLabel:wself.pickerView]);
         [wself computeMatchingCombinationsForResistor:[NSString stringWithFormat:@"%@%@", picker.value, [picker getSelectedLabel:wself.pickerView]]];
     };
+    [self.picker setPicker:self.pickerView toCurrentValue:[NSDecimalNumber decimalNumberWithString:@"10"] label:@"Ω"];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self computeMatchingCombinationsForResistor:@"10"];
 }
 
 - (void)computeMatchingCombinationsForResistor:(NSString *)resistor {
     double value = [Resistors parseString:resistor];
-    
-    NSArray *series = [Resistors computeSeries:value];
-    NSNumber *result = series[3];
-    NSNumber *error = series[4];
-    self.seriesResult.text = [NSString stringWithFormat:@"Series: %@, Error: %0.4f%%", [Resistors stringFromR:result.doubleValue], error.doubleValue];
-    result = series[0];
-    self.R1Label.text = [NSString stringWithFormat:@"R₁ = %@", [Resistors stringFromR:result.doubleValue]];
-    result = series[1];
-    self.R2Label.text = [NSString stringWithFormat:@"R₂ = %@", [Resistors stringFromR:result.doubleValue]];
-    result = series[2];
-    self.R3Label.text = [NSString stringWithFormat:@"R₃ = %@", [Resistors stringFromR:result.doubleValue]];
-//    NSLog(@"Series values = %@", series);
-    
-    NSArray *parallel = [Resistors ComputeParallel:value];
-    result = parallel[3];
-    error = parallel[4];
-    self.parallelResult.text = [NSString stringWithFormat:@"Parallel: %@, Error: %0.4f%%", [Resistors stringFromR:result.doubleValue], error.doubleValue];
-    result = parallel[0];
-    self.R4Label.text = [NSString stringWithFormat:@"R₄ = %@", [Resistors stringFromR:result.doubleValue]];
-    result = parallel[1];
-    self.R5Label.text = [NSString stringWithFormat:@"R₅ = %@", [Resistors stringFromR:result.doubleValue]];
-    result = parallel[2];
-    self.R6Label.text = [NSString stringWithFormat:@"R₆ = %@", [Resistors stringFromR:result.doubleValue]];
-//    NSLog(@"Parallel values = %@", parallel);
-    
-    NSArray *both = [Resistors ComputeSeriesParallel:value];
-    result = both[3];
-    error = both[4];
-    self.combinedResult.text = [NSString stringWithFormat:@"Combined: %@, Error: %0.4f%%", [Resistors stringFromR:result.doubleValue], error.doubleValue];
-    result = both[0];
-    self.R7Label.text = [NSString stringWithFormat:@"R₇ = %@", [Resistors stringFromR:result.doubleValue]];
-    result = both[1];
-    self.R8Label.text = [NSString stringWithFormat:@"R₈ = %@", [Resistors stringFromR:result.doubleValue]];
-    result = both[2];
-    self.R9Label.text = [NSString stringWithFormat:@"R₉ = %@", [Resistors stringFromR:result.doubleValue]];
-//    NSLog(@"Combined values = %@", both);
+  
+    self.seriesResult.text = @"Finding best values...";
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        NSArray *series = [Resistors computeSeries:value];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNumber *result = series[3];
+            NSNumber *error = series[4];
+            self.seriesResult.text = [NSString stringWithFormat:@"Series: %@, Error: %0.4f%%", [Resistors stringFromR:result.doubleValue], error.doubleValue];
+            result = series[0];
+            self.R1Label.text = [NSString stringWithFormat:@"R₁ = %@", [Resistors stringFromR:result.doubleValue]];
+            result = series[1];
+            self.R2Label.text = [NSString stringWithFormat:@"R₂ = %@", [Resistors stringFromR:result.doubleValue]];
+            result = series[2];
+            self.R3Label.text = [NSString stringWithFormat:@"R₃ = %@", [Resistors stringFromR:result.doubleValue]];
+        });
+    });
+
+    self.parallelResult.text = @"Finding best values...";
+    dispatch_async(queue, ^{
+        NSArray *parallel = [Resistors ComputeParallel:value];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNumber *result = parallel[3];
+            NSNumber *error = parallel[4];
+            self.parallelResult.text = [NSString stringWithFormat:@"Parallel: %@, Error: %0.4f%%", [Resistors stringFromR:result.doubleValue], error.doubleValue];
+            result = parallel[0];
+            self.R4Label.text = [NSString stringWithFormat:@"R₄ = %@", [Resistors stringFromR:result.doubleValue]];
+            result = parallel[1];
+            self.R5Label.text = [NSString stringWithFormat:@"R₅ = %@", [Resistors stringFromR:result.doubleValue]];
+            result = parallel[2];
+            self.R6Label.text = [NSString stringWithFormat:@"R₆ = %@", [Resistors stringFromR:result.doubleValue]];
+        });
+    });
+
+    self.combinedResult.text = @"Finding best values...";
+    dispatch_async(queue, ^{
+        NSArray *both = [Resistors ComputeSeriesParallel:value];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNumber *result = both[3];
+            NSNumber *error = both[4];
+            self.combinedResult.text = [NSString stringWithFormat:@"Combined: %@, Error: %0.4f%%", [Resistors stringFromR:result.doubleValue], error.doubleValue];
+            result = both[0];
+            self.R7Label.text = [NSString stringWithFormat:@"R₇ = %@", [Resistors stringFromR:result.doubleValue]];
+            result = both[1];
+            self.R8Label.text = [NSString stringWithFormat:@"R₈ = %@", [Resistors stringFromR:result.doubleValue]];
+            result = both[2];
+            self.R9Label.text = [NSString stringWithFormat:@"R₉ = %@", [Resistors stringFromR:result.doubleValue]];
+        });
+    });
 }
 
 - (void)didReceiveMemoryWarning
