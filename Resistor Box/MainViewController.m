@@ -57,7 +57,7 @@
 - (void)computeMatchingCombinationsForResistor:(NSString *)resistor {
     double value = [Resistors parseString:resistor];
   
-    self.seriesResult.text = @"Finding best values...";
+    self.seriesResult.text = @"Finding best series values...";
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
         NSArray *series = [Resistors computeSeries:value];
@@ -74,7 +74,7 @@
         });
     });
 
-    self.parallelResult.text = @"Finding best values...";
+    self.parallelResult.text = @"Finding best parallel values...";
     dispatch_async(queue, ^{
         NSArray *parallel = [Resistors ComputeParallel:value];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -90,7 +90,7 @@
         });
     });
 
-    self.combinedResult.text = @"Finding best values...";
+    self.combinedResult.text = @"Finding best combined values...";
     dispatch_async(queue, ^{
         NSArray *both = [Resistors ComputeSeriesParallel:value];
         dispatch_async(dispatch_get_main_queue(), ^{
