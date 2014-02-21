@@ -11,7 +11,7 @@
 
 @implementation Resistors
 
-static NSMutableArray *r5PC;                            /* resistor inventory */
+static NSMutableArray *r5PC, *r10PC, *r1PC;    /* resistor inventory */
 static NSArray *rInv;
 //static const NSString *OPENS = @"1.0E12";
 //static const NSString *SHORTS = @"1.0E-12";
@@ -22,39 +22,49 @@ static const double K = 1.0E3;
 
 typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation block type
 
-//+ (void) openFileWithName:(NSString *) name {
-//    ResultSet parts = Parts.getParts();
-//    try {
-//        while (parts.next()) {
-//            Part m = Parts.getPart(parts);
-//            if (m.footprint == null ? name == null : m.footprint.equals(name)) {
-//                Rinv.add(m);
-//                System.out.println(m.toString());
-//            }
-//        }
-//    } catch (Exception e) {
-//        System.out.println(e.getMessage());
-//    }
-//}
 
 + (void) initInventory {
     if (!r5PC) {
         // 1% minimum: 1 ohm; maximum: 10M ohm
         NSArray *resistors1PerCent = @[
-            @10.0, @10.2, @10.5, @10.7, @11.0, @11.3, @11.5, @11.8, @12.1, @12.4, @12.7, @13.0,
-            @13.3, @13.7, @14.0, @14.3, @14.7, @15.0, @15.4, @15.8, @16.2, @16.5, @16.9, @17.4,
-            @17.8, @18.2, @18.7, @19.1, @19.6, @20.0, @20.5, @21.0, @21.5, @22.1, @22.6, @23.2,
-            @23.7, @24.3, @24.9, @25.5, @26.1, @26.7, @27.4, @28.0, @28.7, @29.4, @30.1, @30.9,
-            @31.6, @32.4, @33.2, @34.0, @34.8, @35.7, @36.5, @37.4, @38.3, @39.2, @40.2, @41.2,
-            @42.2, @43.2, @44.2, @45.3, @46.4, @47.5, @48.7, @49.9, @51.1, @52.3, @53.6, @54.9,
-            @56.2, @57.6, @59.0, @60.4, @61.9, @63.4, @64.9, @66.5, @68.1, @69.8, @71.5, @73.2,
-            @75.0, @76.8, @78.7, @80.6, @82.5, @84.5, @86.6, @88.7, @90.9, @93.1, @95.3, @97.6
+            @1.00, @1.02, @1.05, @1.07, @1.10, @1.13, @1.15, @1.18, @1.21, @1.24, @1.27, @1.30,
+            @1.33, @1.37, @1.40, @1.43, @1.47, @1.50, @1.54, @1.58, @1.62, @1.65, @1.69, @1.74,
+            @1.78, @1.82, @1.87, @1.91, @1.96, @2.00, @2.05, @2.10, @2.15, @2.21, @2.26, @2.32,
+            @2.37, @2.43, @2.49, @2.55, @2.61, @2.67, @2.74, @2.80, @2.87, @2.94, @3.01, @3.09,
+            @3.16, @3.24, @3.32, @3.40, @3.48, @3.57, @3.65, @3.74, @3.83, @3.92, @4.02, @4.12,
+            @4.22, @4.32, @4.42, @4.53, @4.64, @4.75, @4.87, @4.99, @5.11, @5.23, @5.36, @5.49,
+            @5.62, @5.76, @5.90, @6.04, @6.19, @6.34, @6.49, @6.65, @6.81, @6.98, @7.15, @7.32,
+            @7.50, @7.68, @7.87, @8.06, @8.25, @8.45, @8.66, @8.87, @9.09, @9.31, @9.53, @9.76
         ];
+        r1PC = [NSMutableArray array];
+        double scale = 1.0;
+        while (scale < 100000000.0) {
+            for (NSNumber *resistor in resistors1PerCent) {
+                if (scale == 10000000.0 && resistor.doubleValue == 1.02) break;
+                [r1PC addObject:@(resistor.doubleValue * scale)];
+            }
+            scale *= 10.0;
+        }
+        // Also add open/short
+        [r1PC addObject:@(OPEN)];
+        [r1PC addObject:@(SHORT)];
         
-        // 10% minimum: 2.2 ohm; maximum: 1M ohm
+        // 10% minimum: 1 ohm; maximum: 1M ohm
         NSArray *resistors10PerCent = @[
-            @10, @12, @15, @18, @22, @27, @33, @39, @47, @56, @68, @82
+            @1.0, @1.2, @1.5, @1.8, @2.2, @2.7, @3.3, @3.9, @4.7, @5.6, @6.8, @8.2
         ];
+        r10PC = [NSMutableArray array];
+        scale = 1.0;
+        while (scale < 10000000.0) {
+            for (NSNumber *resistor in resistors10PerCent) {
+                if (scale == 1000000.0 && resistor.doubleValue == 1.2) break;
+                [r10PC addObject:@(resistor.doubleValue * scale)];
+            }
+            scale *= 10.0;
+        }
+        // Also add open/short
+        [r10PC addObject:@(OPEN)];
+        [r10PC addObject:@(SHORT)];
         
         // 5% minimum: 1 ohm; maximum: 56M ohm
         NSArray *resistors5PerCent =
@@ -62,7 +72,7 @@ typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation bl
                  @3.3, @3.6, @3.9, @4.3, @4.7, @5.1, @5.6, @6.2, @6.8, @7.5, @8.2, @9.1];
         
         r5PC = [NSMutableArray array];
-        double scale = 1.0;
+        scale = 1.0;
         while (scale < 100000000.0) {
             for (NSNumber *resistor in resistors5PerCent) {
                 if (scale == 10000000.0 && resistor.doubleValue == 6.2) break;
@@ -74,7 +84,7 @@ typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation bl
         // Also add open/short
         [r5PC addObject:@(OPEN)];
         [r5PC addObject:@(SHORT)];
-        rInv = r5PC;
+        rInv = r1PC;
     }
 }
 
@@ -139,13 +149,6 @@ typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation bl
     }
 }
 
-
-//static void ReadResistors(String name) {
-//    Open(name); /* Open resistor inventory database */
-//    Rinv.add(new Parts.Part(0, "Solinst", "Short", SHORTS, "1%", name));    /* Augment with shorting-bar */
-//    Rinv.add(new Parts.Part(0, "Solinst", "Open", OPENS, "1%", name));      /* ...and open */
-//}
-
 + (NSArray *) compute:(double)X withAlgorithm:(Algorithm)alg {
     double Re, Rt;
     int Rn = rInv.count;
@@ -157,9 +160,11 @@ typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation bl
             for (k = 0; k < Rn; k++) {
                 Rt = fabs(X - alg(i, j, k));
                 if (Rt < Re) {
-                    Ri = i; Rj = j; Rk = k; Re = Rt;
-//                } else if (fabs(Rt - Re) < 0.000001) {
-//                    NSLog(@"Duplicate combination: %@, %@, and %@", [Resistors stringFromR:[Resistors value:i]], [Resistors stringFromR:[Resistors value:j]], [Resistors stringFromR:[Resistors value:k]]);
+                    Ri = i; Rj = j; Rk = k;
+                    if (fabs(Rt - Re) < 0.000001) {
+                        j = Rn; k = Rn; break;
+                    }
+                    Re = Rt;
                 }
             }
         }
@@ -177,14 +182,14 @@ typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation bl
 }
 
 + (NSArray *) ComputeParallel:(double) X {
-    [Resistors initInventory];
+//    [Resistors initInventory];
     return [Resistors compute:X withAlgorithm:^double (int r1, int r2, int r3) {
         return (1.0 / ((1.0 / [Resistors value:r1]) + (1.0 / [Resistors value:r2]) + (1.0 / [Resistors value:r3])));
     }];
 }
 
 + (NSArray *) ComputeSeriesParallel:(double) X {
-    [Resistors initInventory];
+//    [Resistors initInventory];
     return [Resistors compute:X withAlgorithm:^double (int r1, int r2, int r3) {
         return ([Resistors value:r1] + (1.0 / ((1.0 / [Resistors value:r2]) + (1.0 / [Resistors value:r3]))));
     }];
