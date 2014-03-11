@@ -20,7 +20,7 @@ static const double SHORT = 1.0E-12;
 static const double MEG = 1.0E6;
 static const double K = 1.0E3;
 
-typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation block type
+typedef double (^Algorithm)(NSUInteger r1, NSUInteger r2, NSUInteger r3);   // generic computation block type
 
 
 + (void) initInventory {
@@ -118,7 +118,7 @@ typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation bl
     return subRs.doubleValue * scale;
 }
 
-+ (double) value:(int)index {
++ (double) value:(NSUInteger)index {
     NSNumber *r = rInv[index];
     return r.doubleValue;
 }
@@ -151,8 +151,8 @@ typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation bl
 
 + (NSArray *) compute:(double)X withAlgorithm:(Algorithm)alg {
     double Re, Rt;
-    int Rn = rInv.count;
-    int i, j, k, Ri, Rj, Rk;
+    NSUInteger Rn = rInv.count;
+    NSUInteger i, j, k, Ri, Rj, Rk;
     
     Re = 1.0E100; Ri = 0; Rj = 0; Rk = 0;
     for (i = 0; i < Rn; i++) {
@@ -176,21 +176,21 @@ typedef double (^Algorithm)(int r1, int r2, int r3);   // generic computation bl
 
 + (NSArray *) computeSeries:(double) X {
     [Resistors initInventory];
-    return [Resistors compute:X withAlgorithm:^double (int r1, int r2, int r3) {
+    return [Resistors compute:X withAlgorithm:^double (NSUInteger r1, NSUInteger r2, NSUInteger r3) {
         return [Resistors value:r1] + [Resistors value:r2] + [Resistors value:r3];
     }];
 }
 
 + (NSArray *) ComputeParallel:(double) X {
 //    [Resistors initInventory];
-    return [Resistors compute:X withAlgorithm:^double (int r1, int r2, int r3) {
+    return [Resistors compute:X withAlgorithm:^double (NSUInteger r1, NSUInteger r2, NSUInteger r3) {
         return (1.0 / ((1.0 / [Resistors value:r1]) + (1.0 / [Resistors value:r2]) + (1.0 / [Resistors value:r3])));
     }];
 }
 
 + (NSArray *) ComputeSeriesParallel:(double) X {
 //    [Resistors initInventory];
-    return [Resistors compute:X withAlgorithm:^double (int r1, int r2, int r3) {
+    return [Resistors compute:X withAlgorithm:^double (NSUInteger r1, NSUInteger r2, NSUInteger r3) {
         return ([Resistors value:r1] + (1.0 / ((1.0 / [Resistors value:r2]) + (1.0 / [Resistors value:r3]))));
     }];
 }
